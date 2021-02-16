@@ -3,6 +3,10 @@
   let value;
 </script>
 
-<Datepicker bind:value />
+<Datepicker bind:value>
+  hello
+</Datepicker>
 <br />
+<input type="date" bind:value>
+<br>
 value: {value}

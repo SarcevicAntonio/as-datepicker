@@ -1,23 +1,23 @@
 <script lang="ts">
-  import { clickOutside } from "./clickOutside.js";
   import dayjs from "dayjs";
+  import { clickOutside } from "./clickOutside.js";
 
   let date = dayjs();
+
   export let value: string;
-  $: value = date.format("YYYY-MM-DD");
+  $: value = date.format("YYYY-MM-DD"); // standard type="date" value format, runs everytime date changes
 
-  let viewDate: dayjs.Dayjs;
-  $: viewDate = date.clone();
-
-  let days = [];
+  let days = []; // days in month for view
   let pads = 0;
   $: {
     days = [];
-    for (let i = 1; i <= viewDate.daysInMonth(); i++) {
+    for (let i = 1; i <= date.daysInMonth(); i++) {
       days.push(i);
     }
-    days = days;
-    pads = viewDate.startOf("month").day() - 1;
+    days = days; // trigger svelte change detecion
+
+    // calculate number of padding items needed for month
+    pads = date.startOf("month").day() - 1;
     if (pads === -1) pads = 6;
     console.log(pads);
   }
@@ -28,41 +28,44 @@
     open = !open;
   }
 
-  function add1View(unit: dayjs.OpUnitType) {
-    viewDate = viewDate.add(1, unit);
+  function add1(unit: dayjs.OpUnitType) {
+    date = date.add(1, unit);
   }
 
-  function subtract1View(unit: dayjs.OpUnitType) {
-    viewDate = viewDate.subtract(1, unit);
+  function subtract1(unit: dayjs.OpUnitType) {
+    date = date.subtract(1, unit);
   }
 
   function setDay(day: number) {
-    date = viewDate.date(day);
+    date = date.date(day);
     toggleOpen();
   }
 
   function setToday() {
     date = dayjs();
-    toggleOpen();
   }
 </script>
 
 <div class="container">
-  <input type="text" bind:value />
+  <label>
+    <span>
+      <slot />
+    </span>
+    <input type="text" bind:value />
+  </label>
   <button class="opener" on:click={toggleOpen}> 📅 </button>
   {#if open}
     <div class="picker" use:clickOutside on:clickedOutisde={toggleOpen}>
       <div class="flx-rw-c">
-        <button on:click={() => subtract1View("year")}>◀</button>
-        <span>{viewDate.year()}</span>
-        <button on:click={() => add1View("year")}>▶</button>
+        <button on:click={() => subtract1("year")}>◀</button>
+        <span>{date.year()}</span>
+        <button on:click={() => add1("year")}>▶</button>
       </div>
       <div class="flx-rw-c">
-        <button on:click={() => subtract1View("month")}>◀</button>
-        <span>{viewDate.month() + 1}</span>
-        <button on:click={() => add1View("month")}>▶</button>
+        <button on:click={() => subtract1("month")}>◀</button>
+        <span>{date.month() + 1}</span>
+        <button on:click={() => add1("month")}>▶</button>
       </div>
-      <button on:click={setToday}>today</button>
       <div class="month-grid">
         {#each Array(pads) as _}
           <div class="pad" />
@@ -71,6 +74,7 @@
           <button on:click={() => setDay(day)}>{day}</button>
         {/each}
       </div>
+      <button on:click={setToday}>today</button>
     </div>
   {/if}
 </div>
