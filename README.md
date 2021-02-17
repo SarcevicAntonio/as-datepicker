@@ -15,12 +15,17 @@ My goal is to provide a Datepicker that can replace
 - Weekday Indicator
 - Highlight current Day
 - Highlight selected Day
-- Option for value as JS Date or DateJS Date
+- Option for value as JS Date or DateJS Date or other formats
+- Locale format displays
 - Have Button toggle, not only open
 - Web Component & Svelte Compatible (with ClickOutside)
 - Stylable form outside, optional included styles
-- -- make theme configurable from outside somehow for themes
-- or ad a dark option for now
+  - make theme configurable from outside somehow for themes
+  - or ad a dark option for now
+- Animations
+- Show dates from other months
+- Min and Max Date
+- Date Range Picker
 
 ### Preview
 
