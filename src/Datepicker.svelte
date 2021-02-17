@@ -56,11 +56,11 @@
   }
 </script>
 
-  <label>
-    <span>
-      <slot />
-    </span>
-    <input type="text" bind:value />
+<label>
+  <span>
+    <slot />
+  </span>
+  <input type="text" bind:value />
   <button class="opener" on:click={toggleOpen}> 📅 </button>
   {#if open}
     <div class="picker" use:clickOutside on:clickedOutisde={toggleOpen}>
@@ -90,22 +90,29 @@
 <style type="scss">
   label {
     position: relative;
+    display: inline-block;
     .opener {
+      box-sizing: border-box;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translate(-25%, -50%);
+      height: inherit;
+      margin: 0;
+      padding: 0;
       background-color: transparent;
       border: none;
-      margin: -42px; // positions it inline the input field
     }
     .picker {
       position: absolute;
-      top: 42px;
-      bottom: 0;
+      right: 0;
+      top: calc(100% + 4px);
       padding: 8px;
       height: fit-content;
       display: flex;
       flex-direction: column;
-      
-      // todo: make this configurable from outside somehow for themes
-      // or ad a dark option for now
+
+      // TODO: Needs to be configurable
       background-color: white;
       border: 1px solid black;
       border-radius: 4px;
