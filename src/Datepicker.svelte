@@ -2,17 +2,6 @@
   import dayjs from "dayjs";
   import { clickOutside } from "./clickOutside.ts";
 
-  /**
-   * TODOS:
-   * Highlight current Day
-   * Highlight selected Day
-   * Weekday Indicator
-   * Have Button toggle, not only open
-   * Web Component & Svelte Compatible (with ClickOutside)
-   * Option for value as JS Date or DateJS Date
-   * Stylable form outside, optional included styles
-   */
-
   let date = dayjs();
 
   export let value: string;

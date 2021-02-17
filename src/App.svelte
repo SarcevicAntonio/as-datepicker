@@ -8,6 +8,7 @@
 </Datepicker>
 <br />
 
+<!-- Comparison to <input type="date"> -->
 <label>
   label
   <input type="date" bind:value>
