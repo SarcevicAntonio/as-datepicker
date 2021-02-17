@@ -4,9 +4,13 @@
 </script>
 
 <Datepicker bind:value>
-  hello
+  label
 </Datepicker>
 <br />
-<input type="date" bind:value>
+
+<label>
+  label
+  <input type="date" bind:value>
+</label>
 <br>
 value: {value}

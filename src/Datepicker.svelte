@@ -1,6 +1,17 @@
 <script lang="ts">
   import dayjs from "dayjs";
-  import { clickOutside } from "./clickOutside.js";
+  import { clickOutside } from "./clickOutside.ts";
+
+  /**
+   * TODOS:
+   * Highlight current Day
+   * Highlight selected Day
+   * Weekday Indicator
+   * Have Button toggle, not only open
+   * Web Component & Svelte Compatible (with ClickOutside)
+   * Option for value as JS Date or DateJS Date
+   * Stylable form outside, optional included styles
+   */
 
   let date = dayjs();
 
@@ -19,7 +30,6 @@
     // calculate number of padding items needed for month
     pads = date.startOf("month").day() - 1;
     if (pads === -1) pads = 6;
-    console.log(pads);
   }
 
   let open = false;
@@ -46,22 +56,20 @@
   }
 </script>
 
-<div class="container">
   <label>
     <span>
       <slot />
     </span>
     <input type="text" bind:value />
-  </label>
   <button class="opener" on:click={toggleOpen}> 📅 </button>
   {#if open}
     <div class="picker" use:clickOutside on:clickedOutisde={toggleOpen}>
-      <div class="flx-rw-c">
+      <div class="fr-sb-c">
         <button on:click={() => subtract1("year")}>◀</button>
         <span>{date.year()}</span>
         <button on:click={() => add1("year")}>▶</button>
       </div>
-      <div class="flx-rw-c">
+      <div class="fr-sb-c">
         <button on:click={() => subtract1("month")}>◀</button>
         <span>{date.month() + 1}</span>
         <button on:click={() => add1("month")}>▶</button>
@@ -77,56 +85,41 @@
       <button on:click={setToday}>today</button>
     </div>
   {/if}
-</div>
+</label>
 
-<style>
-  :root {
-    --font: 400 16px Roboto, sans-serif;
-  }
-  .container {
-    font: var(--font);
-    font-size: 16px;
+<style type="scss">
+  label {
     position: relative;
-  }
-  .picker {
-    position: absolute;
-    background-color: white;
-    top: 42px;
-    bottom: 0;
-    padding: 8px;
-    height: fit-content;
-    border: 1px solid black;
-    display: flex;
-    flex-direction: column;
-  }
-  .flx-rw-c {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .month-grid {
-    display: grid;
-    grid-template-columns: auto auto auto auto auto auto auto;
-  }
-  input {
-    font: var(--font);
-    height: 32px;
-    border: 1px solid black;
-    border-radius: 0;
-    padding-left: 8px;
-  }
-  button {
-    font: var(--font);
-    height: 36px;
-    min-width: 36px;
-    border: 1px solid black;
-    border-radius: 0;
-    margin: 4px;
-  }
-  .opener {
-    background-color: transparent;
-    border: none;
-    margin: -41px;
+    .opener {
+      background-color: transparent;
+      border: none;
+      margin: -42px; // positions it inline the input field
+    }
+    .picker {
+      position: absolute;
+      top: 42px;
+      bottom: 0;
+      padding: 8px;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      
+      // todo: make this configurable from outside somehow for themes
+      // or ad a dark option for now
+      background-color: white;
+      border: 1px solid black;
+      border-radius: 4px;
+
+      .fr-sb-c {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .month-grid {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto auto auto;
+      }
+    }
   }
 </style>
