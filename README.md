@@ -4,6 +4,8 @@
 
 ```html
 <Datepicker bind:value>label</Datepicker>
+<!-- or when compiled as webcomponent  -->
+<as-datepicker>label</as-datepicker>
 ```
 
 My goal is to provide a Datepicker that can replace
