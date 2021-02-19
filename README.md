@@ -18,7 +18,6 @@ My goal is to provide a Datepicker that can replace
 - Option for value as JS Date or DateJS Date or other formats
 - Locale format displays
 - Have Button toggle, not only open
-- Web Component & Svelte Compatible (with ClickOutside)
 - Stylable form outside, optional included styles
   - make theme configurable from outside somehow for themes
   - or ad a dark option for now

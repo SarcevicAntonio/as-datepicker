@@ -1,3 +1,5 @@
+<svelte:options tag="as-datepicker" />
+
 <script lang="ts">
   import dayjs from "dayjs";
   import { clickOutside } from "./clickOutside.ts";

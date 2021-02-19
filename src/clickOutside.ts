@@ -1,7 +1,8 @@
 /** Dispatch event on click outside of node */
 export function clickOutside(node) {
   const handleClick = (event) => {
-    if (node && !node.contains(event.target) && !event.defaultPrevented) {
+    // use event.path[0] instead of event.target for webcomponent compat because of shadowdom!
+    if (node && !node.contains(event.path[0]) && !event.defaultPrevented) {
       node.dispatchEvent(new CustomEvent("clickedOutisde", node));
     }
   };
