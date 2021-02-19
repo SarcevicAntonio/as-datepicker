@@ -3,6 +3,10 @@
 <script lang="ts">
   import dayjs from "dayjs";
   import { clickOutside } from "./clickOutside.ts";
+  import { createPopperActions } from 'svelte-popperjs';
+
+  const [popperRef, popperContent] = createPopperActions();
+  const popperOptions = {};
 
   let date = dayjs();
 
@@ -47,36 +51,36 @@
   }
 </script>
 
-<label>
+<label use:popperRef>
   <span>
     <slot />
   </span>
   <input type="text" bind:value />
   <button class="opener" on:click={toggleOpen}> 📅 </button>
-  {#if open}
-    <div class="picker" use:clickOutside on:clickedOutisde={toggleOpen}>
-      <div class="fr-sb-c">
-        <button on:click={() => subtract1("year")}>◀</button>
-        <span>{date.year()}</span>
-        <button on:click={() => add1("year")}>▶</button>
-      </div>
-      <div class="fr-sb-c">
-        <button on:click={() => subtract1("month")}>◀</button>
-        <span>{date.month() + 1}</span>
-        <button on:click={() => add1("month")}>▶</button>
-      </div>
-      <div class="month-grid">
-        {#each Array(pads) as _}
-          <div class="pad" />
-        {/each}
-        {#each days as day}
-          <button on:click={() => setDay(day)}>{day}</button>
-        {/each}
-      </div>
-      <button on:click={setToday}>today</button>
-    </div>
-  {/if}
 </label>
+{#if open}
+  <div class="picker" use:clickOutside on:clickedOutisde={toggleOpen} use:popperContent={popperOptions}>
+    <div class="fr-sb-c">
+      <button on:click={() => subtract1("year")}>◀</button>
+      <span>{date.year()}</span>
+      <button on:click={() => add1("year")}>▶</button>
+    </div>
+    <div class="fr-sb-c">
+      <button on:click={() => subtract1("month")}>◀</button>
+      <span>{date.month() + 1}</span>
+      <button on:click={() => add1("month")}>▶</button>
+    </div>
+    <div class="month-grid">
+      {#each Array(pads) as _}
+        <div class="pad" />
+      {/each}
+      {#each days as day}
+        <button on:click={() => setDay(day)}>{day}</button>
+      {/each}
+    </div>
+    <button on:click={setToday}>today</button>
+  </div>
+{/if}
 
 <style type="scss">
   label {
@@ -94,12 +98,14 @@
       background-color: transparent;
       border: none;
     }
+  }
     .picker {
-      position: absolute;
-      right: 0;
-      top: calc(100% + 4px);
+      // position: absolute;
+      // right: 0;
+      // top: calc(100% + 4px);
       padding: 8px;
       height: fit-content;
+      width: fit-content;
       display: flex;
       flex-direction: column;
 
@@ -119,5 +125,4 @@
         grid-template-columns: auto auto auto auto auto auto auto;
       }
     }
-  }
 </style>
