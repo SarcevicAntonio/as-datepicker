@@ -4,29 +4,59 @@
   import dayjs from "dayjs";
   import { clickOutside } from "./clickOutside.ts";
 
-  let date = dayjs();
+  // picker open state
+  let open = false;
+  function toggleOpen() {
+    open = !open;
+  }
 
+  // internal date
+  let date = dayjs();
+  // external value
   export let value: string;
   $: value = date.format("YYYY-MM-DD"); // standard type="date" value format, runs everytime date changes
 
-  let days = []; // days in month for view
-  let pads = 0;
+  // clickable days in month
+  let days = [];
   $: {
     days = [];
     for (let i = 1; i <= date.daysInMonth(); i++) {
-      days.push(i);
+      days = [...days, i];
     }
-    days = days; // trigger svelte change detecion
+  }
 
-    // calculate number of padding items needed for month
+  // padding items needed for month
+  let pads = 0;
+  $: {
     pads = date.startOf("month").day() - 1;
     if (pads === -1) pads = 6;
   }
 
-  let open = false;
+  // years selector
+  let years = [];
+  let selectYear = 0;
+  $: {
+    years = [];
+    const min = date.subtract(100, "year").year();
+    for (let i = min; i <= min + 200; i++) {
+      years = [...years, i];
+    }
+    selectYear = date.year();
+  }
 
-  function toggleOpen() {
-    open = !open;
+  function setSelectYear() {
+    date = date.set("year", selectYear);
+  }
+
+  // months selector
+  let months = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  let selectMonth = 0;
+  $: {
+    selectMonth = date.month();
+  }
+
+  function setSelectMonth() {
+    date = date.set("month", selectMonth);
   }
 
   function add1(unit: dayjs.OpUnitType) {
@@ -57,12 +87,22 @@
     <div class="picker" use:clickOutside on:clickedOutisde={toggleOpen}>
       <div class="fr-sb-c">
         <button on:click={() => subtract1("year")}>◀</button>
-        <span>{date.year()}</span>
+        <!-- svelte-ignore a11y-no-onchange -->
+        <select bind:value={selectYear} on:change={setSelectYear}>
+          {#each years as year}
+            <option value={year}>{year}</option>
+          {/each}
+        </select>
         <button on:click={() => add1("year")}>▶</button>
       </div>
       <div class="fr-sb-c">
         <button on:click={() => subtract1("month")}>◀</button>
-        <span>{date.month() + 1}</span>
+        <!-- svelte-ignore a11y-no-onchange -->
+        <select bind:value={selectMonth} on:change={setSelectMonth}>
+          {#each months as months}
+            <option value={months}>{months + 1}</option>
+          {/each}
+        </select>
         <button on:click={() => add1("month")}>▶</button>
       </div>
       <div class="month-grid">
@@ -113,6 +153,10 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+        select {
+          min-width: 80px;
+          text-align-last: center;
+        }
       }
       .month-grid {
         display: grid;
