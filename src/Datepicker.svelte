@@ -47,11 +47,11 @@
   }
 </script>
 
-<label>
-  <span>
+<div class="container">
+  <label>
     <slot />
-  </span>
-  <input type="text" bind:value />
+    <input type="text" bind:value />
+  </label>
   <button class="opener" on:click={toggleOpen}> 📅 </button>
   {#if open}
     <div class="picker" use:clickOutside on:clickedOutisde={toggleOpen}>
@@ -76,10 +76,10 @@
       <button on:click={setToday}>today</button>
     </div>
   {/if}
-</label>
+</div>
 
 <style type="scss">
-  label {
+  .container {
     position: relative;
     display: inline-block;
     .opener {
