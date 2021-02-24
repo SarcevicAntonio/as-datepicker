@@ -4,6 +4,7 @@ import css from 'rollup-plugin-css-only';
 import livereload from 'rollup-plugin-livereload';
 import svelte from 'rollup-plugin-svelte';
 import { terser } from 'rollup-plugin-terser';
+import replace from '@rollup/plugin-replace';
 import { sveltePreprocess } from 'svelte-preprocess/dist/autoProcess';
 
 const production = !process.env.ROLLUP_WATCH;
@@ -38,6 +39,7 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		replace({ 'process.env.NODE_ENV': JSON.stringify( 'production' ) }), // fix for svelte-popperjs
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
