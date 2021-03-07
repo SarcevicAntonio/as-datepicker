@@ -126,6 +126,10 @@
       <button on:click={() => add1("month")}>▶</button>
     </div>
     <div class="month-grid">
+      {#each ["M", "T", "W", "T", "F", "S", "S"] as weekday}
+      <button disabled>{weekday}</button>
+      {/each}
+
       {#each Array(pads) as _}
         <div class="pad" />
       {/each}
