@@ -1,0 +1,15 @@
+- fix bug: value form outside gets overwritten on init
+- fix bug: make typeable
+- Highlight current Day
+- Highlight selected Day
+- Option for value as
+  - JS Date or DateJS Date
+  - i18n Locale format displays
+- Stylable form outside, optional included styles
+  - make theme configurable from outside somehow for themes
+  - or ad a dark option for now
+- Animations
+- Show dates from other months
+- Min and Max Date
+- Date Range Picker
+- Have Button toggle, not only open
