@@ -2,8 +2,9 @@
 
 <script lang="ts">
   import dayjs from "dayjs";
-  import { clickOutside } from "./clickOutside.ts";
   import { createPopperActions } from "svelte-popperjs";
+  import { slide } from "svelte/transition";
+  import { clickOutside } from "./clickOutside.ts";
 
   const [popperRef, popperContent] = createPopperActions();
   const popperOptions = {
@@ -104,6 +105,7 @@
     use:clickOutside
     on:clickedOutisde={toggleOpen}
     use:popperContent={popperOptions}
+    transition:slide
   >
     <div class="fr-sb-c">
       <button on:click={() => subtract1("year")}>◀</button>
@@ -127,7 +129,7 @@
     </div>
     <div class="month-grid">
       {#each ["M", "T", "W", "T", "F", "S", "S"] as weekday}
-      <button disabled>{weekday}</button>
+        <button disabled>{weekday}</button>
       {/each}
 
       {#each Array(pads) as _}
