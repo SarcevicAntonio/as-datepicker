@@ -1,6 +1,6 @@
 /** Dispatch event on click outside of node */
-export function clickOutside(node) {
-  const handleClick = (event) => {
+export function clickOutside(node: HTMLElement) {
+  const handleClick = (event: MouseEvent) => {
     // use event.path[0] instead of event.target for webcomponent compat because of shadowdom!
     // but also since firefox doesnt have path we have to call .composedPath() to get path
     var path = event.path || (event.composedPath && event.composedPath());
