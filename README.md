@@ -14,7 +14,6 @@ My goal is to provide a Datepicker that can replace
 ### Todo
 
 - fix bug: value form outside gets overwritten on init
-- Positioning strategy, try out popperjs?
 - Weekday Indicator
 - Highlight current Day
 - Highlight selected Day

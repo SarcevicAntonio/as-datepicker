@@ -6,7 +6,17 @@
   import { createPopperActions } from "svelte-popperjs";
 
   const [popperRef, popperContent] = createPopperActions();
-  const popperOptions = {};
+  const popperOptions = {
+    placement: "bottom",
+    modifiers: [
+      {
+        name: "offset",
+        options: {
+          offset: [2, 8],
+        },
+      },
+    ],
+  };
 
   // picker open state
   let open = false;
@@ -82,10 +92,9 @@
 </script>
 
 <div class="container">
-
-  <label use:popperRef>
+  <label>
     <slot />
-    <input type="text" bind:value />
+    <input use:popperRef type="text" bind:value />
   </label>
   <button class="opener" on:click={toggleOpen}> 📅 </button>
 </div>
