@@ -174,7 +174,14 @@
         <div class="pad" />
       {/each}
       {#each days as day}
-        <button on:click={() => setDay(day)}>{day}</button>
+        <button
+          on:click={() => setDay(day)}
+          class:current-day={selectYear === dayjs().year() &&
+            day === dayjs().date()}
+          class:selected-day={day === date.date()}
+        >
+          {day}
+        </button>
       {/each}
     </div>
     <button on:click={setToday}>today</button>
@@ -182,6 +189,13 @@
 {/if}
 
 <style type="scss">
+  .current-day {
+    border-color: yellowgreen;
+  }
+  .selected-day {
+    background-color: green;
+    color: white;
+  }
   .as-datepicker-container {
     position: relative;
     display: inline-block;
