@@ -1,5 +1,3 @@
-- fix bug: value form outside gets overwritten on init
-- fix bug: make typeable
 - Highlight current Day
 - Highlight selected Day
 - Option for value as
