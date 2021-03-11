@@ -10,6 +10,7 @@
   /**
    * svelte-popperjs config
    */
+
   const [popperRef, popperContent] = createPopperActions();
   const popperOptions = {
     placement: "bottom",
@@ -23,14 +24,10 @@
     ],
   };
 
-  let open = false; // picker open state
-  function toggleOpen() {
-    open = !open;
-  }
-
   /**
    * Value Logic
    */
+
   let date = dayjs(); // internal date
   export let value: string; // external value
   let inputValue: string; // value bound to the input
@@ -65,6 +62,11 @@
   /**
    * GUI Logic
    */
+
+  let open = false; // picker open state
+  function toggleOpen() {
+    open = !open;
+  }
 
   let days = []; // clickable days
   $: {
